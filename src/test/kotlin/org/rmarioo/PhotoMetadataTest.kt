@@ -5,12 +5,12 @@ import org.junit.Test
 import java.io.File
 import java.time.Month.JULY
 
-class HelloTest {
+class PhotoMetadataTest {
 
     @Test
     fun extractPhotoMetadata() {
 
-        val file = File(HelloTest::class.java.getResource("/IMG_20200710_163551.jpg").file)
+        val file = File(PhotoMetadataTest::class.java.getResource("/IMG_20200710_163551.jpg").file)
         val metadata: PhotoMetadata = extractPhotoMetadata(file)
 
         assertEquals(metadata.name, "IMG_20200710_163551.jpg")

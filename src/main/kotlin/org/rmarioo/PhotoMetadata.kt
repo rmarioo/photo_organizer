@@ -11,13 +11,15 @@ fun extractPhotoMetadata(file: File): PhotoMetadata {
 
     return PhotoMetadata(
         metadata.fileName(),
-        metadata.latitude(),
-        metadata.longitude(),
+        metadata.coordinate(),
         metadata.originalDate()
     )
 }
 
 private fun Metadata.fileName(): String = valueFor("File", "File Name")
+
+
+private fun Metadata.coordinate(): Coordinate = Coordinate(latitude(),longitude())
 
 private fun Metadata.latitude(): Latitude {
     val valStr = valueFor("GPS", "GPS Latitude")
@@ -46,60 +48,7 @@ private fun Metadata.valueFor(directoryName: String, tagName: String): String {
 
 data class PhotoMetadata(
     val name: String,
-    val latitude: Latitude,
-    val longitudeOld: Longitude,
+    val coordinate: Coordinate,
     val date: LocalDateTime
 )
-
-data class Latitude(val degree: Int,val minutes:Int, val seconds: Double) {
-
-    fun toDecimalPoint(): Double {
-        return toDecimalPoint(degree,minutes,seconds)
-    }
-    companion object {
-        fun fromString( valStr: String): Latitude {
-
-            val (degree, minutes, seconds) = Coordinate.fromString(valStr)
-
-            return Latitude(degree,minutes,seconds)
-        }
-    }
-}
-
-data class Longitude(val degree: Int,val minutes:Int, val seconds: Double) {
-
-    fun toDecimalPoint(): Double {
-        return toDecimalPoint(degree,minutes,seconds)
-    }
-
-    companion object {
-        fun fromString( valStr: String): Longitude {
-
-            val (degree, minutes, seconds) = Coordinate.fromString(valStr)
-
-            return Longitude(degree,minutes,seconds)
-        }
-    }
-}
-
-data class Coordinate(val degree: Int,val minutes:Int, val seconds: Double) {
-
-    companion object {
-        fun fromString( valStr: String): Coordinate {
-            val intAndMinutesPlusSeconds = valStr.split("°")
-            val degree =   intAndMinutesPlusSeconds[0].toInt()
-
-            val minutesAndSeconds = intAndMinutesPlusSeconds[1].split("'")
-            val minutes = minutesAndSeconds[0].trim().toInt()
-
-            val seconds = minutesAndSeconds[1].replace("\"", "").trim().toDouble()
-
-            return Coordinate(degree,minutes,seconds)
-        }
-
-
-    }
-}
- fun toDecimalPoint(degree: Int, minutes:Int, seconds: Double) = degree + (seconds.div(60.0) + minutes).div(60.0)
-
 

@@ -1,5 +1,8 @@
 package org.rmarioo
 
+import org.hamcrest.CoreMatchers.`is`
+import org.json.JSONObject
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.io.File
@@ -39,5 +42,13 @@ class PhotoMetadataTest {
         assertEquals(longDecimal, 9.287278, DELTA)
     }
 
+    @Test
+    fun `khttp restClient test`() {
+        val r = khttp.get("http://dummy.restapiexample.com/api/v1/employee/1")
 
+        val data= r.jsonObject["data"] as JSONObject
+        val name = data.getString("employee_name")
+
+        Assert.assertThat(name, `is`("Tiger Nixon"))
+    }
 }

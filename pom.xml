@@ -30,6 +30,11 @@
             <version>${metadata-extractor.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.github.jkcclemens</groupId>
+            <artifactId>khttp</artifactId>
+            <version>-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit</artifactId>
             <version>${kotlin.version}</version>
@@ -71,5 +76,11 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories><repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+    </repositories>
 
 </project>
